@@ -44,7 +44,7 @@
     @if($produtos->isEmpty())
         <div class="alert alert-info">Não há nenhum produto cadastrado.</div>
     @else
-        <table class="table">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th>ID</th>

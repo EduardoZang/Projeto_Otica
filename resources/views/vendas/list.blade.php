@@ -44,7 +44,7 @@
     @if($vendas->isEmpty())
         <div class="alert alert-info">Não há nenhuma venda registrada.</div>
     @else
-        <table class="table">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th>ID</th>

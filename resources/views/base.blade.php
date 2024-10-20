@@ -9,29 +9,38 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+        <style>
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
 
-        .content {
-            flex: 1;
-        }
+    .content {
+        flex: 1;
+    }
 
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #f8f9fa;
-        }
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #f8f9fa;
+    }
 
-        .navbar-nav .nav-link {
-            margin: 0 15px;
-        }
-    </style>
+    .navbar-nav .nav-link {
+        margin: 0 15px;
+        color: #000;
+        transition: background-color 0.3s, color 0.3s;
+        border-radius: 5px;
+        padding: 5px 10px;
+    }
+
+    .navbar-nav .nav-link:hover {
+        background-color: #0d6efd;
+        color: #fff;
+    }
+</style>
 </head>
 
 <body>
