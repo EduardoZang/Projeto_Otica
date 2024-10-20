@@ -15,10 +15,16 @@ class Produto extends Model
         'descricao',
         'preco',
         'estoque',
+        'cliente_id',
     ];
 
     public function vendas()
     {
         return $this->hasMany(Venda::class, 'produto_id');
+    }
+
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class);
     }
 }

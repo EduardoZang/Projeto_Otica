@@ -27,6 +27,7 @@
                         <option value="descricao">Descrição</option>
                         <option value="preco">Preço</option>
                         <option value="estoque">Estoque</option>
+                        <option value="cliente">Comissão</option>
                     </select>
                 </div>
                 <div class="col-4">
@@ -50,6 +51,7 @@
                     <th>Descrição</th>
                     <th>Preço</th>
                     <th>Estoque</th>
+                    <th>Comissão</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -60,6 +62,7 @@
                         <td>{{ $produto->descricao }}</td>
                         <td>R$ {{ number_format($produto->preco, 2, ',', '.') }}</td>
                         <td>{{ $produto->estoque }}</td>
+                        <td>{{$produto->cliente->nome}}</td>
                         <td>
                             <a href="{{ route('produtos.edit', $produto->id) }}" class="btn btn-warning">Editar</a>
                             

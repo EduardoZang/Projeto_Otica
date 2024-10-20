@@ -92,6 +92,11 @@ class ClienteController extends Controller
             return redirect()->route('clientes.index')->with('error', 'Cliente não encontrado');
         }
 
+        if ($cliente->produtos()->count() > 0) {
+            return redirect()->route('clientes.index')
+                ->with('error', 'Não é possível remover este cliente porque ele está associado a um produto.');
+        }
+
         if ($cliente->vendas()->count() > 0) {
             return redirect()->route('clientes.index')
                 ->with('error', 'Não é possível remover este cliente porque ele está associado a uma venda.');
