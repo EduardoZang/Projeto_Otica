@@ -37,7 +37,7 @@ class ClienteController extends Controller
             'data_nascimento' => 'required|date',
             'genero' => 'nullable|in:masculino,feminino,outro',
             'cpf' => 'required|size:14|unique:clientes,cpf',
-            'telefone' => 'nullable|max:20',
+            'telefone' => 'nullable|max:15|min:14',
         ], [
             'nome.required' => 'O nome é obrigatório.',
             'nome.max' => 'O nome pode ter no máximo 255 caracteres.',
@@ -47,7 +47,8 @@ class ClienteController extends Controller
             'cpf.required' => 'O CPF é obrigatório.',
             'cpf.size' => 'O CPF deve ter 14 caracteres.',
             'cpf.unique' => 'Este CPF já está cadastrado.',
-            'telefone.max' => 'O telefone pode ter no máximo 20 caracteres.',
+            'telefone.min' => 'O telefone deve ter no mínimo 14 caracteres.',
+            'telefone.max' => 'O telefone pode ter no máximo 15 caracteres.',
         ]);
 
         Cliente::create($request->all());
@@ -67,7 +68,7 @@ class ClienteController extends Controller
             'data_nascimento' => 'required|date',
             'genero' => 'nullable|in:masculino,feminino,outro',
             'cpf' => 'required|size:14|unique:clientes,cpf,' . $cliente->id,
-            'telefone' => 'nullable|max:20',
+            'telefone' => 'nullable|max:15|min:14',
         ], [
             'nome.required' => 'O nome é obrigatório.',
             'nome.max' => 'O nome pode ter no máximo 100 caracteres.',
@@ -77,7 +78,8 @@ class ClienteController extends Controller
             'cpf.required' => 'O CPF é obrigatório.',
             'cpf.size' => 'O CPF deve ter 14 caracteres.',
             'cpf.unique' => 'Este CPF já está cadastrado.',
-            'telefone.max' => 'O telefone pode ter no máximo 20 caracteres.',
+            'telefone.min' => 'O telefone deve ter no mínimo 14 caracteres.',
+            'telefone.max' => 'O telefone pode ter no máximo 15 caracteres.',
         ]);
 
         $cliente->update($request->all());
@@ -90,6 +92,11 @@ class ClienteController extends Controller
 
         if (!$cliente) {
             return redirect()->route('clientes.index')->with('error', 'Cliente não encontrado');
+        }
+
+        if ($cliente->produtos()->count() > 0 && $cliente->vendas()->count() > 0) {
+            return redirect()->route('clientes.index')
+                ->with('error', 'Não é possível remover este cliente porque ele está associado a um produto e a uma venda.');
         }
 
         if ($cliente->produtos()->count() > 0) {

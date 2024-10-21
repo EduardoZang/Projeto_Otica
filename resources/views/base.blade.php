@@ -5,42 +5,45 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('titulo') - Ótica Olhar Feliz</title>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <style>
-    body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
 
-    .content {
-        flex: 1;
-    }
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-    footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background-color: #f8f9fa;
-    }
+        .content {
+            flex: 1;
+        }
 
-    .navbar-nav .nav-link {
-        margin: 0 15px;
-        color: #000;
-        transition: background-color 0.3s, color 0.3s;
-        border-radius: 5px;
-        padding: 5px 10px;
-    }
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f8f9fa;
+        }
 
-    .navbar-nav .nav-link:hover {
-        background-color: #0d6efd;
-        color: #fff;
-    }
-</style>
+        .navbar-nav .nav-link {
+            margin: 0 15px;
+            color: #000;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 5px;
+            padding: 5px 10px;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: #0d6efd;
+            color: #fff;
+        }
+    </style>
 </head>
 
 <body>
@@ -93,11 +96,29 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
+
     <script>
-        $(document).ready(function(){
-            $('#cpf').mask('000.000.000-00', {reverse: true});
-            $('#telefone').mask('(00) 00000-0000');
+        $(document).ready(function() {
+            if ($('#cpf').length) {
+                $('#cpf').mask('000.000.000-00', { reverse: true });
+            }
+            if ($('#telefone').length) {
+                $('#telefone').mask('(00) 00000-0000');
+            }
+
+            if ($('#preco').length) {
+                $('#preco').mask('R$ #.##0,00', { 
+                    reverse: true 
+                });
+
+                $('form').on('submit', function() {
+                    let preco = $('#preco').val()
+                        .replace('R$ ', '') 
+                        .replace(/\./g, '')
+                        .replace(',', '.');
+                    $('#preco').val(preco);
+                });
+            }
         });
     </script>
 </body>

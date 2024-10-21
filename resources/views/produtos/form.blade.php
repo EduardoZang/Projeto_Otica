@@ -17,7 +17,7 @@
 
         <div class="form-group">
             <label for="preco">Preço</label>
-            <input type="number" step="0.01" class="form-control" name="preco" id="preco" value="{{ old('preco', isset($produto) ? $produto->preco : '') }}" required>
+            <input type="text" step="0.01" class="form-control" name="preco" id="preco" value="{{ old('preco', isset($produto) ? $produto->preco : '') }}" required>
         </div>
 
         <div class="form-group">
