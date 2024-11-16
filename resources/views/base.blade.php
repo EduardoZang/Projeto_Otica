@@ -66,6 +66,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('vendas.index') }}">Vendas</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('categorias.index') }}">Categorias</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('funcionarios.index') }}">Funcionários</a>
+                        </li>
                     </ul>
                 </div>
             </div>

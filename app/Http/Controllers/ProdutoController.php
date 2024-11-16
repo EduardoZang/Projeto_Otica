@@ -4,21 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Produto;
 use App\Models\Cliente;
+use App\Models\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProdutoController extends Controller
 {
     public function index()
     {
-        $produtos = Produto::with(['cliente'])->get();
+        $produtos = Produto::with(['cliente', 'categoria'])->get();
         return view('produtos.list', compact('produtos'));
     }
 
     public function create()
     {
         $clientes = Cliente::all();
-        return view('produtos.form', compact('clientes'));
+        $categorias = Categoria::all();
+        return view('produtos.form', compact('clientes', 'categorias'));
     }
 
     public function edit($id)
@@ -30,8 +33,24 @@ class ProdutoController extends Controller
         }
 
         $clientes = Cliente::all();
+        $categorias = Categoria::all();
 
-        return view('produtos.form', compact('produto', 'clientes'));
+        return view('produtos.form', compact('produto', 'clientes', 'categorias'));
+    }
+
+    public function gerarRelatorio()
+    {
+        $produtos = Produto::with(['cliente', 'categoria'])->get();
+        $pdf = Pdf::loadView('produtos.relatorio', compact('produtos'));
+
+        return $pdf->download('relatorio_produtos.pdf');
+    }
+
+    public function show()
+    {
+        $produtos = Produto::with(['cliente', 'categoria'])->get();
+
+        return view('produtos.relatorio', compact('produtos'));
     }
 
     public function store(Request $request)
@@ -41,6 +60,7 @@ class ProdutoController extends Controller
             'preco' => 'required|numeric|min:0',
             'estoque' => 'required|integer|min:0',
             'cliente_id' => 'required|exists:clientes,id',
+            'categoria_id' => 'required|exists:categorias,id',
         ], [
             'descricao.required' => 'A descrição é obrigatória.',
             'descricao.string' => 'A descrição deve ser um texto.',
@@ -53,6 +73,8 @@ class ProdutoController extends Controller
             'estoque.min' => 'O estoque não pode ser negativo.',
             'cliente_id.required' => 'O cliente é obrigatório.',
             'cliente_id.exists' => 'O cliente selecionado não existe.',
+            'categoria_id.required' => 'A categoria é obrigatória.',
+            'categoria_id.exists' => 'A categoria selecionada não existe.',
         ]);
 
         if ($validator->fails()) {
@@ -61,17 +83,6 @@ class ProdutoController extends Controller
 
         Produto::create($request->all());
         return redirect()->route('produtos.index')->with('success', 'Produto adicionado com sucesso!');
-    }
-
-    public function show($id)
-    {
-        $produto = Produto::with(['cliente'])->find($id);
-
-        if (!$produto) {
-            return redirect()->route('produtos.index')->with('error', 'Produto não encontrado.');
-        }
-
-        return view('produtos.form', compact('produto'));
     }
 
     public function update(Request $request, $id)
@@ -87,6 +98,7 @@ class ProdutoController extends Controller
             'preco' => 'sometimes|required|numeric|min:0',
             'estoque' => 'sometimes|required|integer|min:0',
             'cliente_id' => 'sometimes|required|exists:clientes,id',
+            'categoria_id' => 'sometimes|required|exists:categorias,id',
         ], [
             'descricao.required' => 'A descrição é obrigatória.',
             'descricao.string' => 'A descrição deve ser um texto.',
@@ -99,6 +111,8 @@ class ProdutoController extends Controller
             'estoque.min' => 'O estoque não pode ser negativo.',
             'cliente_id.required' => 'O cliente é obrigatório.',
             'cliente_id.exists' => 'O cliente selecionado não existe.',
+            'categoria_id.required' => 'A categoria é obrigatória.',
+            'categoria_id.exists' => 'A categoria selecionada não existe.',
         ]);
 
         if ($validator->fails()) {
@@ -124,7 +138,6 @@ class ProdutoController extends Controller
         $produto->delete();
         return redirect()->route('produtos.index')->with('success', 'Produto removido com sucesso!');
     }
-
     public function search(Request $request)
     {
         $validator = Validator::make($request->all(), [

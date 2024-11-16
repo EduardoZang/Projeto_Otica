@@ -4,11 +4,13 @@
 @section('conteudo')
     <div class="container mt-5">
         <h1 class="text-center">Bem-vinda (o) à Ótica Olhar Feliz</h1>
-        <p class="text-center">Este é um sistema simples para gerenciar produtos, clientes e vendas.</p>
+        <p class="text-center">Este é um sistema simples para gerenciar produtos, clientes, vendas, categorias de venda e funcionários</p>
         <div class="text-center mt-4">
             <a href="{{ route('produtos.index') }}" class="btn btn-primary">Gerenciar Produtos</a>
             <a href="{{ route('clientes.index') }}" class="btn btn-success">Gerenciar Clientes</a>
             <a href="{{ route('vendas.index') }}" class="btn btn-warning">Gerenciar Vendas</a>
+            <a href="{{ route('categorias.index') }}" class="btn btn-danger">Gerenciar Categorias</a>
+            <a href="{{ route('funcionarios.index') }}" class="btn" style="background-color:pink">Gerenciar Funcionários</a>
         </div>
     </div>
 @endsection

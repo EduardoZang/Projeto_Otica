@@ -35,6 +35,18 @@
             </div>
 
             <div class="form-group">
+            <label for="funcionario_id">Funcionário</label>
+            <select class="form-control" name="funcionario_id" id="funcionario_id" required>
+                <option value="" disabled {{ !isset($venda) ? 'selected' : '' }}>Selecione</option>
+                @foreach ($funcionarios as $funcionario)
+                    <option value="{{ $funcionario->id }}" {{ old('funcionario_id', isset($venda) ? $venda->funcionario_id : '') == $funcionario->id ? 'selected' : '' }}>
+                        {{ $funcionario->nome }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+            <div class="form-group">
                 <label for="quantidade">Quantidade</label>
                 <input type="number" class="form-control" name="quantidade" id="quantidade" value="{{ old('quantidade', isset($venda) ? $venda->quantidade : '') }}" required>
             </div>

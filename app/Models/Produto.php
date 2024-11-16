@@ -16,6 +16,7 @@ class Produto extends Model
         'preco',
         'estoque',
         'cliente_id',
+        'categoria_id',
     ];
 
     public function vendas()
@@ -26,5 +27,10 @@ class Produto extends Model
     public function cliente()
     {
         return $this->belongsTo(Cliente::class);
+    }
+
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
     }
 }

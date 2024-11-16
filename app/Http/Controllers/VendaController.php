@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Venda;
 use App\Models\Cliente;
 use App\Models\Produto;
+use App\Models\Funcionario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -20,7 +21,8 @@ class VendaController extends Controller
     {
         $clientes = Cliente::all();
         $produtos = Produto::all();
-        return view('vendas.form', compact('clientes', 'produtos'));
+        $funcionarios = Funcionario::all();
+        return view('vendas.form', compact('clientes', 'produtos','funcionarios'));
     }
 
     public function edit($id)
@@ -33,8 +35,9 @@ class VendaController extends Controller
 
         $clientes = Cliente::all();
         $produtos = Produto::all();
+        $funcionarios = Funcionario::all();
 
-        return view('vendas.form', compact('venda', 'clientes', 'produtos'));
+        return view('vendas.form', compact('venda', 'clientes', 'produtos', 'funcionarios'));
     }
 
     public function store(Request $request)
@@ -42,12 +45,15 @@ class VendaController extends Controller
         $validator = Validator::make($request->all(), [
             'cliente_id' => 'required|exists:clientes,id',
             'produto_id' => 'required|exists:produtos,id',
+            'funcionario_id' => 'required|exists:funcionarios,id',
             'quantidade' => 'required|integer|min:1',
         ], [
             'cliente_id.required' => 'O cliente é obrigatório.',
             'cliente_id.exists' => 'O cliente selecionado não existe.',
             'produto_id.required' => 'O produto é obrigatório.',
             'produto_id.exists' => 'O produto selecionado não existe.',
+            'funcionario_id.required' => 'O funcionário é obrigatório.',
+            'funcionario_id.exists' => 'O funcionário selecionado não existe.',
             'quantidade.required' => 'A quantidade é obrigatória.',
             'quantidade.integer' => 'A quantidade deve ser um número inteiro.',
             'quantidade.min' => 'A quantidade deve ser maior ou igual a 1.',
@@ -61,15 +67,19 @@ class VendaController extends Controller
         return redirect()->route('vendas.index')->with('success', 'Venda adicionada com sucesso!');
     }
 
-    public function show($id)
+    public function gerarRelatorio()
     {
-        $venda = Venda::with(['cliente', 'produto'])->find($id);
+        $vendas = Venda::with(['cliente', 'produto', 'funcionario'])->get();
+        $pdf = Pdf::loadView('vendas.relatorio', compact('vendas'));
 
-        if (!$venda) {
-            return redirect()->route('vendas.index')->with('error', 'Venda não encontrada');
-        }
+        return $pdf->download('relatorio_vendas.pdf');
+    }
 
-        return view('vendas.form', compact('venda'));
+    public function show()
+    {
+        $vendas = Venda::with(['cliente', 'produto', 'funcionario'])->get();
+
+        return view('vendas.relatorio', compact('vendas'));
     }
 
     public function update(Request $request, $id)
@@ -83,12 +93,15 @@ class VendaController extends Controller
         $validator = Validator::make($request->all(), [
             'cliente_id' => 'sometimes|required|exists:clientes,id',
             'produto_id' => 'sometimes|required|exists:produtos,id',
+            'funcionario_id' => 'sometimes|required|exists:funcionarios,id',
             'quantidade' => 'sometimes|required|integer|min:1',
         ], [
             'cliente_id.required' => 'O cliente é obrigatório.',
             'cliente_id.exists' => 'O cliente selecionado não existe.',
             'produto_id.required' => 'O produto é obrigatório.',
             'produto_id.exists' => 'O produto selecionado não existe.',
+            'funcionario_id.required' => 'O funcionário é obrigatório.',
+            'funcionario_id.exists' => 'O funcionário selecionado não existe.',
             'quantidade.required' => 'A quantidade é obrigatória.',
             'quantidade.integer' => 'A quantidade deve ser um número inteiro.',
             'quantidade.min' => 'A quantidade deve ser maior ou igual a 1.',

@@ -28,6 +28,7 @@
                         <option value="preco">Preço</option>
                         <option value="estoque">Estoque</option>
                         <option value="cliente">Comissão</option>
+                        <option value="categoria">Categoria</option>
                     </select>
                 </div>
                 <div class="col-4">
@@ -39,6 +40,9 @@
                 </div>
             </div>
         </form>
+    </div>
+    <div class="mb-3">
+        <a href="{{ route('produtos.relatorio') }}" class="btn btn-info">Gerar Relatório</a>
     </div>
 
     @if($produtos->isEmpty())
@@ -52,6 +56,7 @@
                     <th>Preço</th>
                     <th>Estoque</th>
                     <th>Comissão</th>
+                    <th>Categoria</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -63,6 +68,7 @@
                         <td>R$ {{ number_format($produto->preco, 2, ',', '.') }}</td>
                         <td>{{ $produto->estoque }}</td>
                         <td>{{$produto->cliente->nome}}</td>
+                        <td>{{ $produto->categoria ? $produto->categoria->nome : 'Sem categoria' }}</td>
                         <td>
                             <a href="{{ route('produtos.edit', $produto->id) }}" class="btn btn-warning">Editar</a>
                             

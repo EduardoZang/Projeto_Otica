@@ -24,20 +24,34 @@
             <label for="estoque">Estoque</label>
             <input type="number" class="form-control" name="estoque" id="estoque" value="{{ old('estoque', isset($produto) ? $produto->estoque : '') }}" required>
         </div>
+
         <div class="form-group">
-                <label for="cliente_id">Comissão</label>
-                <select class="form-control" name="cliente_id" id="cliente_id" required>
-                    <option value="" disabled {{ !isset($produto) ? 'selected' : '' }}>Selecione</option>
-                    @foreach ($clientes as $cliente)
-                        <option value="{{ $cliente->id }}" {{ old('cliente_id', isset($produto) ? $produto->cliente_id : '') == $cliente->id ? 'selected' : '' }}>
-                            {{ $cliente->nome }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+            <label for="cliente_id">Comissão</label>
+            <select class="form-control" name="cliente_id" id="cliente_id" required>
+                <option value="" disabled {{ !isset($produto) ? 'selected' : '' }}>Selecione</option>
+                @foreach ($clientes as $cliente)
+                    <option value="{{ $cliente->id }}" {{ old('cliente_id', isset($produto) ? $produto->cliente_id : '') == $cliente->id ? 'selected' : '' }}>
+                        {{ $cliente->nome }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="categoria_id">Categoria</label>
+            <select class="form-control" name="categoria_id" id="categoria_id" required>
+                <option value="" disabled {{ !isset($produto) ? 'selected' : '' }}>Selecione</option>
+                @foreach ($categorias as $categoria)
+                    <option value="{{ $categoria->id }}" {{ old('categoria_id', isset($produto) ? $produto->categoria_id : '') == $categoria->id ? 'selected' : '' }}>
+                        {{ $categoria->nome }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
         <button type="submit" class="btn btn-success mb-3 mt-3">{{ isset($produto) ? 'Atualizar' : 'Adicionar' }}</button>
         <a href="{{ route('produtos.index') }}" class="btn btn-secondary mb-3 mt-3">Cancelar</a>
     </form>
 </div>
+
 @endsection

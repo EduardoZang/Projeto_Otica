@@ -17,16 +17,19 @@ class VendaSeeder extends Seeder
                 'cliente_id' => 1, // ID do cliente Eduardo Zang
                 'produto_id' => 1,  // ID do produto Óculos de Sol
                 'quantidade' => 2,
+                'funcionario_id'=> 1,
             ],
             [
                 'cliente_id' => 2, // ID do cliente Luis Tavares
                 'produto_id' => 2,  // ID do produto Lente de Contato
                 'quantidade' => 5,
+                'funcionario_id'=> 2,
             ],
             [
                 'cliente_id' => 3, // ID do cliente Milena Zang
                 'produto_id' => 3,  // ID do produto Estojo para óculos
                 'quantidade' => 1,
+                'funcionario_id'=> 3,
             ],
         ]);
     }

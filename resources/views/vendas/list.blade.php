@@ -40,6 +40,9 @@
             </div>
         </form>
     </div>
+    <div class="mb-3">
+        <a href="{{ route('vendas.relatorio') }}" class="btn btn-info">Gerar Relatório</a>
+    </div>
 
     @if($vendas->isEmpty())
         <div class="alert alert-info">Não há nenhuma venda registrada.</div>
@@ -50,6 +53,7 @@
                     <th>ID</th>
                     <th>Cliente</th>
                     <th>Produto</th>
+                    <th>Funcionário</th>
                     <th>Quantidade</th>
                     <th>Ações</th>
                 </tr>
@@ -60,6 +64,7 @@
                         <td>{{ $venda->id }}</td>
                         <td>{{ $venda->cliente->nome }}</td>
                         <td>{{ $venda->produto->descricao }}</td>
+                        <td>{{ $venda->funcionario ? $venda->funcionario->nome : 'Sem funcionário' }}</td>
                         <td>{{ $venda->quantidade }}</td>
                         <td>
                             <a href="{{ route('vendas.edit', $venda->id) }}" class="btn btn-warning">Editar</a>

@@ -13,9 +13,9 @@ class ProdutoSeeder extends Seeder
     public function run()
     {
         DB::table('produtos')->insert([
-            ['descricao' => 'Óculos de Sol', 'preco' => 199.99, 'estoque' => 10, 'cliente_id' => 1,],
-            ['descricao' => 'Lente de Contato', 'preco' => 89.99, 'estoque' => 50, 'cliente_id' => 2,],
-            ['descricao' => 'Estojo para óculos', 'preco' => 74.99, 'estoque' => 150, 'cliente_id' => 3,],
+            ['descricao' => 'Ray-Ban Óculos de Sol Masculino', 'preco' => 199.99, 'estoque' => 10, 'cliente_id' => 1, 'categoria_id'=> 1],
+            ['descricao' => 'Óculos de grau Vogue - Rosa', 'preco' => 799.99, 'estoque' => 30, 'cliente_id' => 2,'categoria_id'=> 2],
+            ['descricao' => 'Óculos esportivo Oakley - Ciclismo', 'preco' => 359.99, 'estoque' => 150, 'cliente_id' => 3, 'categoria_id'=> 3],
         ]);
     }
 }

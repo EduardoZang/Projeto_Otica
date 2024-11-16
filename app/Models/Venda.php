@@ -15,6 +15,7 @@ class Venda extends Model
         'cliente_id',
         'produto_id',
         'quantidade',
+        'funcionario_id',
     ];
 
     public function cliente()
@@ -25,5 +26,10 @@ class Venda extends Model
     public function produto()
     {
         return $this->belongsTo(Produto::class);
+    }
+
+    public function funcionario()
+    {
+        return $this->belongsTo(Funcionario::class);
     }
 }

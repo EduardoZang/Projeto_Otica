@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 26/10/2024 às 04:41
+-- Tempo de geração: 16/11/2024 às 19:26
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -20,6 +20,31 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `db_projeto_otica`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `categorias`
+--
+
+CREATE TABLE `categorias` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `descricao` text NOT NULL,
+  `imagem` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Despejando dados para a tabela `categorias`
+--
+
+INSERT INTO `categorias` (`id`, `nome`, `descricao`, `imagem`, `created_at`, `updated_at`) VALUES
+(1, 'Óculos de Sol', 'Óculos de sol para proteção e estilo.', 'categorias/oculos_sol.jpg', '2024-11-16 21:26:00', '2024-11-16 21:26:00'),
+(2, 'Óculos de Grau', 'Óculos de grau para correção visual.', 'categorias/oculos_grau.jpg', '2024-11-16 21:26:00', '2024-11-16 21:26:00'),
+(3, 'Óculos Esportivos', 'Óculos desenvolvidos para atividades esportivas.', 'categorias/oculos_esportivos.jpeg', '2024-11-16 21:26:00', '2024-11-16 21:26:00'),
+(4, 'Óculos de Segurança', 'Óculos para proteção em ambientes de trabalho.', 'categorias/oculos_seguranca.jpg', '2024-11-16 21:26:00', '2024-11-16 21:26:00');
 
 -- --------------------------------------------------------
 
@@ -50,6 +75,30 @@ INSERT INTO `clientes` (`id`, `nome`, `data_nascimento`, `genero`, `cpf`, `telef
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `funcionarios`
+--
+
+CREATE TABLE `funcionarios` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `cargo` varchar(255) NOT NULL,
+  `foto_perfil` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Despejando dados para a tabela `funcionarios`
+--
+
+INSERT INTO `funcionarios` (`id`, `nome`, `cargo`, `foto_perfil`, `created_at`, `updated_at`) VALUES
+(1, 'Júlio César dos Santos', 'Vendedor', 'funcionarios/julio_cesar.jpg', '2024-11-16 21:26:00', '2024-11-16 21:26:00'),
+(2, 'Teresinha Juliana Teresinha Assis', 'Gerente de vendas', 'funcionarios/teresinha_assis.jpg', '2024-11-16 21:26:00', '2024-11-16 21:26:00'),
+(3, 'Lara Sandra Caroline Figueiredo', 'Médica Oftalmologista', 'funcionarios/lara_figueiredo.jpg', '2024-11-16 21:26:00', '2024-11-16 21:26:00');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `migrations`
 --
 
@@ -68,7 +117,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (2, '2024_10_19_215617_create_clientes_table', 1),
 (3, '2024_10_19_215645_create_vendas_table', 1),
 (4, '2024_10_19_232657_create_sessions_table', 1),
-(5, '2024_10_20_200727_add_cliente_id_to_produtos_table', 1);
+(5, '2024_10_20_200727_add_cliente_id_to_produtos_table', 1),
+(6, '2024_11_16_022935_create_categorias_table', 1),
+(7, '2024_11_16_023000_add_categoria_id_to_produtos_table', 1),
+(8, '2024_11_16_171733_create_funcionario_table', 1),
+(9, '2024_11_16_172104_add_funcionario_id_to_vendas_table', 1);
 
 -- --------------------------------------------------------
 
@@ -81,6 +134,7 @@ CREATE TABLE `produtos` (
   `descricao` varchar(255) NOT NULL,
   `preco` decimal(8,2) NOT NULL,
   `estoque` int(11) NOT NULL,
+  `categoria_id` bigint(20) UNSIGNED NOT NULL,
   `cliente_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -90,10 +144,10 @@ CREATE TABLE `produtos` (
 -- Despejando dados para a tabela `produtos`
 --
 
-INSERT INTO `produtos` (`id`, `descricao`, `preco`, `estoque`, `cliente_id`, `created_at`, `updated_at`) VALUES
-(1, 'Óculos de Sol', 199.99, 10, 1, NULL, NULL),
-(2, 'Lente de Contato', 89.99, 50, 2, NULL, NULL),
-(3, 'Estojo para óculos', 74.99, 150, 3, NULL, NULL);
+INSERT INTO `produtos` (`id`, `descricao`, `preco`, `estoque`, `categoria_id`, `cliente_id`, `created_at`, `updated_at`) VALUES
+(1, 'Ray-Ban Óculos de Sol Masculino', 199.99, 10, 1, 1, NULL, NULL),
+(2, 'Óculos de grau Vogue - Rosa', 799.99, 30, 2, 2, NULL, NULL),
+(3, 'Óculos esportivo Oakley - Ciclismo', 359.99, 150, 3, 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -110,13 +164,6 @@ CREATE TABLE `sessions` (
   `last_activity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Despejando dados para a tabela `sessions`
---
-
-INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('HL3WxVqiV7z5227imZdCuGPfYS0nBZoMa3mf4nf7', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiNzNiMHphUzJWSm1sSTc5bWQzUDdlVXZudFlkSjNZclRhTzQ4d242eiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9jbGllbnRlcyI7fX0=', 1729478059);
-
 -- --------------------------------------------------------
 
 --
@@ -128,6 +175,7 @@ CREATE TABLE `vendas` (
   `cliente_id` bigint(20) UNSIGNED NOT NULL,
   `produto_id` bigint(20) UNSIGNED NOT NULL,
   `quantidade` int(11) NOT NULL,
+  `funcionario_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -136,14 +184,20 @@ CREATE TABLE `vendas` (
 -- Despejando dados para a tabela `vendas`
 --
 
-INSERT INTO `vendas` (`id`, `cliente_id`, `produto_id`, `quantidade`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 2, NULL, NULL),
-(2, 2, 2, 5, NULL, NULL),
-(3, 3, 3, 1, NULL, NULL);
+INSERT INTO `vendas` (`id`, `cliente_id`, `produto_id`, `quantidade`, `funcionario_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 2, 1, NULL, NULL),
+(2, 2, 2, 5, 2, NULL, NULL),
+(3, 3, 3, 1, 3, NULL, NULL);
 
 --
 -- Índices para tabelas despejadas
 --
+
+--
+-- Índices de tabela `categorias`
+--
+ALTER TABLE `categorias`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices de tabela `clientes`
@@ -151,6 +205,12 @@ INSERT INTO `vendas` (`id`, `cliente_id`, `produto_id`, `quantidade`, `created_a
 ALTER TABLE `clientes`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `clientes_cpf_unique` (`cpf`);
+
+--
+-- Índices de tabela `funcionarios`
+--
+ALTER TABLE `funcionarios`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices de tabela `migrations`
@@ -163,7 +223,8 @@ ALTER TABLE `migrations`
 --
 ALTER TABLE `produtos`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `produtos_cliente_id_foreign` (`cliente_id`);
+  ADD KEY `produtos_cliente_id_foreign` (`cliente_id`),
+  ADD KEY `produtos_categoria_id_foreign` (`categoria_id`);
 
 --
 -- Índices de tabela `sessions`
@@ -179,35 +240,48 @@ ALTER TABLE `sessions`
 ALTER TABLE `vendas`
   ADD PRIMARY KEY (`id`),
   ADD KEY `vendas_cliente_id_foreign` (`cliente_id`),
-  ADD KEY `vendas_produto_id_foreign` (`produto_id`);
+  ADD KEY `vendas_produto_id_foreign` (`produto_id`),
+  ADD KEY `vendas_funcionario_id_foreign` (`funcionario_id`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
+-- AUTO_INCREMENT de tabela `categorias`
+--
+ALTER TABLE `categorias`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT de tabela `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de tabela `funcionarios`
+--
+ALTER TABLE `funcionarios`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `vendas`
 --
 ALTER TABLE `vendas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restrições para tabelas despejadas
@@ -217,6 +291,7 @@ ALTER TABLE `vendas`
 -- Restrições para tabelas `produtos`
 --
 ALTER TABLE `produtos`
+  ADD CONSTRAINT `produtos_categoria_id_foreign` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `produtos_cliente_id_foreign` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE CASCADE;
 
 --
@@ -224,6 +299,7 @@ ALTER TABLE `produtos`
 --
 ALTER TABLE `vendas`
   ADD CONSTRAINT `vendas_cliente_id_foreign` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`),
+  ADD CONSTRAINT `vendas_funcionario_id_foreign` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionarios` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `vendas_produto_id_foreign` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`);
 COMMIT;
 
