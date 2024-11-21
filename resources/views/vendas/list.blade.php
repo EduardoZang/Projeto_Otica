@@ -41,7 +41,7 @@
         </form>
     </div>
     <div class="mb-3">
-        <a href="{{ route('vendas.relatorio') }}" class="btn btn-info">Gerar Relatório</a>
+        <a target="_blank" href="{{ route('vendas.relatorio') }}" class="btn btn-info">Gerar Relatório</a>
     </div>
 
     @if($vendas->isEmpty())
