@@ -99,7 +99,7 @@ class FuncionarioController extends Controller
     public function search(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'tipo' => 'required|string|in:nome,descricao',
+            'tipo' => 'required|string|in:nome,cargo',
             'valor' => 'nullable|string|max:255',
         ], [
             'tipo.required' => 'O tipo de busca é obrigatório.',
