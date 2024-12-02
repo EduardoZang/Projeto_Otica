@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 16/11/2024 às 19:26
+-- Tempo de geração: 02/12/2024 às 03:25
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -41,10 +41,10 @@ CREATE TABLE `categorias` (
 --
 
 INSERT INTO `categorias` (`id`, `nome`, `descricao`, `imagem`, `created_at`, `updated_at`) VALUES
-(1, 'Óculos de Sol', 'Óculos de sol para proteção e estilo.', 'categorias/oculos_sol.jpg', '2024-11-16 21:26:00', '2024-11-16 21:26:00'),
-(2, 'Óculos de Grau', 'Óculos de grau para correção visual.', 'categorias/oculos_grau.jpg', '2024-11-16 21:26:00', '2024-11-16 21:26:00'),
-(3, 'Óculos Esportivos', 'Óculos desenvolvidos para atividades esportivas.', 'categorias/oculos_esportivos.jpeg', '2024-11-16 21:26:00', '2024-11-16 21:26:00'),
-(4, 'Óculos de Segurança', 'Óculos para proteção em ambientes de trabalho.', 'categorias/oculos_seguranca.jpg', '2024-11-16 21:26:00', '2024-11-16 21:26:00');
+(1, 'Óculos de Sol', 'Óculos de sol para proteção e estilo.', 'categorias/oculos_sol.jpg', '2024-12-02 05:25:23', '2024-12-02 05:25:23'),
+(2, 'Óculos de Grau', 'Óculos de grau para correção visual.', 'categorias/oculos_grau.jpg', '2024-12-02 05:25:23', '2024-12-02 05:25:23'),
+(3, 'Óculos Esportivos', 'Óculos desenvolvidos para atividades esportivas.', 'categorias/oculos_esportivos.jpeg', '2024-12-02 05:25:23', '2024-12-02 05:25:23'),
+(4, 'Óculos de Segurança', 'Óculos para proteção em ambientes de trabalho.', 'categorias/oculos_seguranca.jpg', '2024-12-02 05:25:23', '2024-12-02 05:25:23');
 
 -- --------------------------------------------------------
 
@@ -92,9 +92,9 @@ CREATE TABLE `funcionarios` (
 --
 
 INSERT INTO `funcionarios` (`id`, `nome`, `cargo`, `foto_perfil`, `created_at`, `updated_at`) VALUES
-(1, 'Júlio César dos Santos', 'Vendedor', 'funcionarios/julio_cesar.jpg', '2024-11-16 21:26:00', '2024-11-16 21:26:00'),
-(2, 'Teresinha Juliana Teresinha Assis', 'Gerente de vendas', 'funcionarios/teresinha_assis.jpg', '2024-11-16 21:26:00', '2024-11-16 21:26:00'),
-(3, 'Lara Sandra Caroline Figueiredo', 'Médica Oftalmologista', 'funcionarios/lara_figueiredo.jpg', '2024-11-16 21:26:00', '2024-11-16 21:26:00');
+(1, 'Júlio César dos Santos', 'Vendedor', 'funcionarios/julio_cesar.jpg', '2024-12-02 05:25:23', '2024-12-02 05:25:23'),
+(2, 'Teresinha Juliana Teresinha Assis', 'Gerente de vendas', 'funcionarios/teresinha_assis.jpg', '2024-12-02 05:25:23', '2024-12-02 05:25:23'),
+(3, 'Lara Sandra Caroline Figueiredo', 'Médica Oftalmologista', 'funcionarios/lara_figueiredo.jpg', '2024-12-02 05:25:23', '2024-12-02 05:25:23');
 
 -- --------------------------------------------------------
 
