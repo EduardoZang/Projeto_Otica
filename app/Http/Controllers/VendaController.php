@@ -8,6 +8,7 @@ use App\Models\Produto;
 use App\Models\Funcionario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class VendaController extends Controller
 {
@@ -78,8 +79,9 @@ class VendaController extends Controller
     public function show()
     {
         $vendas = Venda::with(['cliente', 'produto', 'funcionario'])->get();
+        $pdf = Pdf::loadView('vendas.relatorio', compact('vendas'));
 
-        return view('vendas.relatorio', compact('vendas'));
+        return $pdf->download('relatorio_vendas.pdf');
     }
 
     public function update(Request $request, $id)

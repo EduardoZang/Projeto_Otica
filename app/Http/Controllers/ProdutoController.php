@@ -49,8 +49,9 @@ class ProdutoController extends Controller
     public function show()
     {
         $produtos = Produto::with(['cliente', 'categoria'])->get();
+        $pdf = Pdf::loadView('produtos.relatorio', compact('produtos'));
 
-        return view('produtos.relatorio', compact('produtos'));
+        return $pdf->download('relatorio_produtos.pdf');
     }
 
     public function store(Request $request)
